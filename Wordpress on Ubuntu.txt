@@ -1,0 +1,45 @@
+apt install mariadb-server php apache2  php-mysql
+Manuel Flores11:27 AM
+    ls /var/www/html/
+    mv latest.tar.gz /var/www/
+    cd /var/www/
+    tar -zxvf latest.tar.gz
+    ls
+Manuel Flores11:34 AM
+Editing apache2 config  (VirtualHost)
+    nano /etc/apache2/sites-enabled/000-default.conf
+Change this line: DocumentRoot /var/www/html
+    To this : DocumentRoot /var/www/wordpress
+Restart the webserver
+    systemctl restart apache2
+Reload the web browser tab
+Manuel Flores11:40 AM
+Change the ownership of the worpress folder
+    ls -l
+    chown -R www-data.www-data wordpress
+    ls -l
+Manuel Flores11:46 AM
+Explore databases on mariadb
+    mysql
+    MariaDB [mysql]> show databases;
+    MariaDB [mysql]> use mysql
+    MariaDB [mysql]> show tables;
+    MariaDB [mysql]> select * from user;
+Manuel Flores11:53 AM
+Create de database
+    MariaDB [mysql]> use mysql
+    MariaDB [mysql]> CREATE DATABASE wpdb;
+    MariaDB [mysql]> SHOW DATABASES;
+Create the user
+    MariaDB [mysql]> CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'superpassword';
+    MariaDB [mysql]> select * from user;
+Grant privileges to that user on the new database
+    MariaDB [mysql]> GRANT ALL PRIVILEGES ON wpdb.* TO 'wpuser'@'localhost';
+    MariaDB [mysql]> SHOW GRANTS FOR 'wpuser'@'localhost';
+Manuel Flores12:02 PM
+Test the connection to the database for that user from the same machine (localhost)
+    MariaDB [mysql]> exit
+    mysql -u wpuser -p   wpdb
+  Type the password, the we should gwt something like
+    MariaDB [wpdb]> 
+   
